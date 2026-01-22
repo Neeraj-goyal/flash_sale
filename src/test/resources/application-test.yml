@@ -1,0 +1,5 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop #Creates tables on startup and drops them on shutdown for a clean state in tests
+    show-sql: false #Disables SQL logging to reduce noise in test output

@@ -1,0 +1,30 @@
+spring:
+  redis:
+    port: 6379
+    host: localhost
+  application:
+    name: flashsale
+    datasource:
+        url: jdbc:postgresql://localhost:5432/flashsale_db
+        username: goyals
+        password: password
+        driver-class-name: org.postgresql.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update #Automatiocally creates or updates tables based on entities
+        show-sql: true #Logs SQL statements executed by Hibernate
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    acks: all # gives back acknowledgement when broker confirms that all replicas have received the data
+    retries: 3 # if broker is down, producer retries sending message maximum 3 times
+    linger-ms: 5 # producer groups messages that arrive in between 5ms into a single batch to improve performance
+    bootstrap-servers:
+      - localhost:9092
+    producer:
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+kafka:
+  topic:
+    name: flashsale-orders
