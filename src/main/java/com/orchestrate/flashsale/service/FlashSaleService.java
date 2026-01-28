@@ -38,6 +38,8 @@ public class FlashSaleService {
         var lock = redissonClient.getLock(lockKey);
         try {
             // Wait up to 10s for lock, hold for 5s
+            // Thread 1 will wait for 10 seconds and keep trying to get lock, if acquired, it will hold the lock for 5 seconds
+            // after 5s, reddison will forcefully release the lock, this will avoid deadlocks
             if (lock.tryLock(10, 5, TimeUnit.SECONDS)) {
                 log.info("Lock Acquired for product: " + productId);
                 // Call the transactional method
